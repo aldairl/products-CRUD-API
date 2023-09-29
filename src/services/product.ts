@@ -1,5 +1,7 @@
+import { History } from "../interfaces/history";
 import { Product } from "../interfaces/product";
 import { QueryProduct } from "../interfaces/queryModel";
+import history from "../models/history";
 import productModel from '../models/product'
 
 export class ProductService {
@@ -18,7 +20,7 @@ export class ProductService {
                 .skip((page * limit) - limit)
         ])
 
-        const totalPages = Math.ceil(total/limit)
+        const totalPages = Math.ceil(total / limit)
         return { totalPages, products }
     }
 
@@ -38,8 +40,33 @@ export class ProductService {
         }
     }
 
-    static async update(id: string, body: Product) {
-        const newProduct = await productModel.findByIdAndUpdate(id, body, { upsert: true })
+    static async update(id: string, body: Partial<Product>) {
+        const currentProduct = await productModel.findById(id)
+        const fieldsToSaveHistory = ['price', 'stock']
+
+        if (!currentProduct) {
+            console.error('Producto no encontrado');
+            return;
+          }
+          
+        fieldsToSaveHistory.forEach( async (field) => {
+            const newValue = body[field as keyof Product]
+            const currentValue = currentProduct[field as keyof Product]
+
+            if( currentValue !== newValue ){
+                const changeHistory: History = {
+                    productId: currentProduct.id,
+                    changedField: field,
+                    newValue:  newValue as string,
+                    previousValue: currentValue
+                }
+
+                const newChange = new history(changeHistory)
+                await newChange.save()
+            }
+        })
+
+        const newProduct = await productModel.findByIdAndUpdate(id, body, { new: true })
         return newProduct
     }
 

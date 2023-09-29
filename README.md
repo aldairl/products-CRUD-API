@@ -38,4 +38,29 @@ npm run dev
 npm start
 ```
 
+## EndPoints
+
+[Link text](https://documenter.getpostman.com/view/20772701/2s9YJaX3u2)
+
+products
+
+GET ```/api/products``` get all products
+POST ```/api/products``` create a product
+GET ```/api/products/:id``` get a product by id
+PATCH ```/api/products/:id``` update a product by id
+DELETE ```/api/products/:id``` delete a product by id
+
+tags
+
+GET ```/api/tags``` get all tags
+POST ```/api/tags``` create a tag
+GET ```/api/tags/:id``` get a tag by id
+PATCH ```/api/tags/:id``` update a tag by id
+DELETE ```/api/tags/:id``` delete a tag by id
+
+history
+
+GET ```/api/history``` get general history
+GET ```/api/history/:id``` get product history
+
 Enjoy!
