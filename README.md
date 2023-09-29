@@ -40,7 +40,7 @@ npm start
 
 ## EndPoints
 
-[Link text](https://documenter.getpostman.com/view/20772701/2s9YJaX3u2)
+[Documentation](https://documenter.getpostman.com/view/20772701/2s9YJaX3u2)
 
 products
 
